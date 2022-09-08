@@ -3,8 +3,7 @@
   import { createEventDispatcher } from 'svelte';
   import { fade, fly, slide, scale } from 'svelte/transition';
   import { cubicIn, bounceInOut } from 'svelte/easing';
-  import { onMount } from 'svelte';
-  import axios from 'axios';
+ 
 
   let load = userStore;
   let dispatch = createEventDispatcher();
