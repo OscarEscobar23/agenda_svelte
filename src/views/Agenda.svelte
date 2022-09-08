@@ -23,7 +23,7 @@
         
       });
     }
-    load.setMeetups(loadUsers.reverse());
+    load.setUsers(loadUsers.reverse());
   })
   .catch(err=>{
     console.log(err);

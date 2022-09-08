@@ -5,7 +5,7 @@ const users = writable([]);
 
 const userStore = {
     subscribe: users.subscribe,
-    setMeetups: (usersArray)=>{
+    setUsers: (usersArray)=>{
         users.set(usersArray);
     },
     addUser:(usersData)=>{
