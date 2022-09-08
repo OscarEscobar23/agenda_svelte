@@ -20,7 +20,7 @@
     for (const id in data ){
       loadUsers.push({
         ...data[id]
-        // id:id
+        
       });
     }
     load.setMeetups(loadUsers.reverse());
