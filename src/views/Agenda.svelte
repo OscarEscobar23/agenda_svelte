@@ -7,31 +7,8 @@
   import axios from 'axios';
 
   let load = userStore;
-  // let loadUsers =[];
   let dispatch = createEventDispatcher();
-  let id;
-
- 
-
-// onMount(async () =>{
-//   let response = await  axios.get('http://127.0.0.1:8000/api/contactos');
-//   let loadUsers =[];
-//   loadUsers = response.data;
-//   load.subscribe(loadUsers.reverse());
-// })
-// onMount(async() => {
-//         console.log("the component has mounted");
-//         await getContacts()
-//     })
-
-//     const getContacts = async () => {
-//         let response = await axios.get('http://127.0.0.1:8000/api/contactos')
-//         //console.log('response',response)
-//         loadUsers = response.data;
-//         load.subscribe = loadUsers;
-//     }
-
-  
+   
   fetch(`http://127.0.0.1:8000/api/contactos`)
   .then(res =>{
     if(!res.ok){
@@ -43,8 +20,8 @@
     let loadUsers =[];
     for (const id in data ){
       loadUsers.push({
-        ...data[id],
-        id:id
+        ...data[id]
+        // id:id
       });
     }
     load.setMeetups(loadUsers.reverse());
@@ -53,20 +30,7 @@
     console.log(err);
   })
   
-  function deleteUser(id){
-   
-    fetch(`http://127.0.0.1:8000/api/contactos/${id}`,{
-      method: 'DELETE'
-    }).then(res => {
-      if(!res.ok){
-        throw new Error('Fail to delete');
-      }
-      userStore.removeContact(id);
-    }).catch(err =>{
-      console.log(err);
-    })
-  }
-
+  
   
   
 </script>
@@ -95,11 +59,12 @@
 <div class="usersGrid">
     {#each $load as user (user.id)}
     <div class="userItem" transition:fly={{delay:250,duration:300,y:-500,easing:cubicIn}}>
+      <p>{user.id}</p>
       <h4 >Nombre: {user.name}</h4>
       <p>Correo: {user.email}</p>
       <p>Telefono: {user.phone}</p>
       <button on:click={() => dispatch('edit',user.id)}>Editar</button>
-      <button on:click={deleteUser}>Eliminar</button>
+    
     </div>
     {/each} 
 </div>

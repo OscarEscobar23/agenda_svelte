@@ -12,6 +12,7 @@ export let email="";
 export let phone="";
 export let id;
 
+
 if(id){
   console.log(id);
   const unsubscribe = userStore.subscribe(items =>{
@@ -33,12 +34,6 @@ function addUser(){
   }
   if(id){
 
-    // const updateUser = async () => {
-
-    //   await axios.put(`http://127.0.0.1:8000/api/contactos/${id}`)
-    // }
-
-   
     fetch(`http://127.0.0.1:8000/api/contactos/${id}`,{
       method: 'PUT',
       headers: {'content-type': 'application/json'},
@@ -52,10 +47,14 @@ function addUser(){
       if(!res){
                 throw new Error('Fail');
             }
-            userStore.updateUser(id,usersData);
+
+      userStore.updateUser(id,usersData);
+      console.log(res);
+
     }).catch(err => {
       console.error(err);
     });
+  
   }else{
     
     fetch('http://127.0.0.1:8000/api/contactos',{ 
@@ -77,27 +76,34 @@ function addUser(){
       console.log(err);
     })
     
-   
-    // }).then(res => {
-    //   if(!res){
-    //     throw new Error('Fail');
-    //   }
-    //   return res;
-    // })
-    // .then(data => {
-    //   userStore.addUser({...usersData});
-    // })
-    // .catch(err =>{
-    //   console.log(err);
-    // })
   };
   
 
   dispatch ('save');
 };
+
 function close(){
     dispatch ('closed');
 }
+
+function deleteUser(){
+  
+   console.log(id);
+    fetch(`http://127.0.0.1:8000/api/contactos/${id}`,{
+      method: 'DELETE'
+      
+    }).then(res => {
+      if(!res.ok){
+        throw new Error('Fail to delete');
+      }
+      console.log(res);
+      userStore.removeContact(id);
+    }).catch(err =>{
+      console.log(err);
+    })
+    dispatch ('save');
+  }
+
 </script>
 <style>
   .modal-backdrop {
@@ -157,5 +163,6 @@ label {
     </form>
     <button on:click="{addUser}">Guardar</button>
     <button on:click="{close}">Cerrar</button>
+    <button on:click="{deleteUser}">Eliminar</button>
   
 </div>
