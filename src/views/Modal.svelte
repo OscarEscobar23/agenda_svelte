@@ -60,6 +60,7 @@ function addUser(){
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body:JSON.stringify({
+      
         name: usersData.name, 
         email: usersData.email,
         phone: usersData.phone
@@ -70,7 +71,15 @@ function addUser(){
       }
       return res;
     }).then(data => {
-      userStore.addUser({...usersData});
+      console.log(data);
+      let loadUsers =[];
+    for (const id in data ){
+      loadUsers.push({
+        ...data[id]
+        
+      });
+    }
+      userStore.addUser({...loadUsers});
     }).catch(err =>{
       console.log(err);
     })
